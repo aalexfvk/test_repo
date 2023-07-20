@@ -26,4 +26,4 @@ jobs:
         with:
           url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
           method: LINK
-          headers: '{"Link": "<${{ github.server_url }}/${{ github.repository }}>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+          headers: '{"Link": "https://github.com/aalexfvk/test_repo/pull/1; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
