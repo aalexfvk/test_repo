@@ -13,5 +13,13 @@ jobs:
           fi
       - name: link
         if: steps.check-branch.outputs.task_number
-        run: |
-          echo HELLO! ${{ steps.check-branch.outputs.task_number }}
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
+          method: 'LINK'
+          customHeaders: >
+            '{
+               "Link": "${{ github.server_url }}/${{ github.repository }}/"; rel="relates"",
+             }'
+          bearerToken: OAuth ${{ secrets.OAUTH_STARTREK }}
+        
