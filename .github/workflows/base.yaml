@@ -23,7 +23,7 @@ jobs:
           url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.parse_branch_name.outputs.issue_number }}'
           method: 'LINK'
           customHeaders: >
-            '{
+            {
                "Link": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}>; rel=\"relates\"",
                "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"
-             }'
+            }
