@@ -2,8 +2,16 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Explore-GitHub-Actions:    
     runs-on: ubuntu-latest
-    steps:      
-      - if: ${{true && ${{false}}}}
-        run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+    steps:
+      - name: check-branch
+        id: check-tag
+        run: |
+          if [[ ${{ github.ref }} =~ ^refs\/heads\/([A-Z]{3,5}-[0-9]{1,6})_.*$ ]]; then
+              echo "task_number="${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+          fi
+      - name: link
+        if: steps.check-branch.outputs.task_number
+        run: |
+          echo HELLO! ${{ steps.check-branch.outputs.task_number }}
