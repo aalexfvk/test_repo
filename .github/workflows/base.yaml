@@ -1,30 +1,23 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  pull_request:
+    branches:
+    - main
 jobs:
-  Explore-GitHub-Actions:    
+  Link-With-Startrek:    
     runs-on: ubuntu-latest
     steps:
-      - name: check branch
-        id: check-branch
+      - name: parse branch
+        id: parse-branch
         run: |
-          if [[ ${{ github.ref }} =~ ^refs\/heads\/([A-Z]{3,5}-[0-9]{1,6})_.*$ ]]; then
-              echo task_number="${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+          if [[ ${{ github.head_ref }} =~ ^refs\/heads\/([A-Za-z]+\-[0-9]+)_.*$ ]]; then
+              echo issue_number="${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
           fi
-      - name: link
-        if: steps.check-branch.outputs.task_number
+      - name: link with startrek
+        if: steps.check-branch.outputs.issue_number
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
-          method: 'Link'
-          customHeaders: '{"Link": "<https://github.com/aalexfvk/test_repo/pull/1>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
-          # bearerToken: "OAuth ${{ secrets.OAUTH_STARTREK }}"
-        #   url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}/remotelinks'
-        #   method: POST
-        #   customHeaders: '{"Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
-        #   data: '{"relationship": "RELATES", "key": "${{ github.server_url }}/${{ github.repository }}", "origin": "CH-BAckup CI/CD"'        
-        # uses: satak/webrequest-action@master
-        # with:
-        #   url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
-        #   method: LINK
-        #   headers: '{"Link": "<https://github.com/aalexfvk/test_repo/pull/1>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.issue_number }}'
+          method: 'LINK'
+          customHeaders: '{"Link": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
