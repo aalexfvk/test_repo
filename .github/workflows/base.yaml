@@ -15,7 +15,10 @@ jobs:
         if: steps.check-branch.outputs.task_number
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
-          method: 'Link'
-          customHeaders: '{"Link": "${{ github.server_url }}/${{ github.repository }}; rel=relates", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
-        
+          # url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
+          # method: 'Link'
+          # customHeaders: '{"Link": "${{ github.server_url }}/${{ github.repository }}; rel=relates", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}/remotelinks'
+          method: POST
+          customHeaders: '"Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+          data: '{"relationship": "RELATES", "key": "${{ github.server_url }}/${{ github.repository }}", "origin": "CH-BAckup CI/CD"'        
