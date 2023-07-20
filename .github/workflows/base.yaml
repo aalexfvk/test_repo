@@ -3,7 +3,7 @@ name: Link with Startrek
 on:
   pull_request:
     branches:
-    - main
+    - main 
 
 jobs:
   link_with_startrek:    
