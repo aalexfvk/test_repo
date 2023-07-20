@@ -13,17 +13,18 @@ jobs:
           fi
       - name: link
         if: steps.check-branch.outputs.task_number
-        # uses: fjogeleit/http-request-action@v1
-        # with:
-        #   # url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
-        #   # method: 'Link'
-        #   # customHeaders: '{"Link": "${{ github.server_url }}/${{ github.repository }}; rel=relates", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
+          method: 'Link'
+          customHeaders: '{"Link": "<<https://github.com/aalexfvk/test_repo/pull/1>>; rel=relates"'
+          bearerToken: "OAuth ${{ secrets.OAUTH_STARTREK }}"
         #   url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}/remotelinks'
         #   method: POST
         #   customHeaders: '{"Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
         #   data: '{"relationship": "RELATES", "key": "${{ github.server_url }}/${{ github.repository }}", "origin": "CH-BAckup CI/CD"'        
-        uses: satak/webrequest-action@master
-        with:
-          url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
-          method: LINK
-          headers: '{"Link": "<https://github.com/aalexfvk/test_repo/pull/1>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+        # uses: satak/webrequest-action@master
+        # with:
+        #   url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
+        #   method: LINK
+        #   headers: '{"Link": "<https://github.com/aalexfvk/test_repo/pull/1>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
