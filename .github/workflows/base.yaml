@@ -5,11 +5,11 @@ jobs:
   Explore-GitHub-Actions:    
     runs-on: ubuntu-latest
     steps:
-      - name: check-branch
-        id: check-tag
+      - name: check branch
+        id: check-branch
         run: |
           if [[ ${{ github.ref }} =~ ^refs\/heads\/([A-Z]{3,5}-[0-9]{1,6})_.*$ ]]; then
-              echo "task_number="${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+              echo task_number="${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
           fi
       - name: link
         if: steps.check-branch.outputs.task_number
