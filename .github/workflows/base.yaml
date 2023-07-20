@@ -17,7 +17,7 @@ jobs:
         with:
           url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}'
           method: 'Link'
-          customHeaders: '{"Link": "<<https://github.com/aalexfvk/test_repo/pull/1>>; rel=relates"'
+          customHeaders: '{"Link": "<https://github.com/aalexfvk/test_repo/pull/1>; rel=relates"'
           bearerToken: "OAuth ${{ secrets.OAUTH_STARTREK }}"
         #   url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.check-branch.outputs.task_number }}/remotelinks'
         #   method: POST
