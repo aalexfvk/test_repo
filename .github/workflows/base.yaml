@@ -1,11 +1,13 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Link with Startrek
+# run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+
 on:
   pull_request:
     branches:
     - main
+
 jobs:
-  Link-With-Startrek:    
+  link_with_startrek:    
     runs-on: ubuntu-latest
     steps:
       - name: parse_branch_name
@@ -20,4 +22,8 @@ jobs:
         with:
           url: 'https://st-api.yandex-team.ru/v2/issues/${{ steps.parse_branch_name.outputs.issue_number }}'
           method: 'LINK'
-          customHeaders: '{"Link": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}>; rel=\"relates\"", "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"}'
+          customHeaders: >
+            '{
+               "Link": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}>; rel=\"relates\"",
+               "Authorization": "OAuth ${{ secrets.OAUTH_STARTREK }}"
+            }'
